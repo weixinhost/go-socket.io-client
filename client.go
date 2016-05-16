@@ -56,8 +56,15 @@ func NewClient(uri string, opts *Options) (client *Client, err error) {
 	}
 
 	go client.readLoop()
-
 	return
+}
+
+func (client *Client) Close() error {
+
+	if client.conn != nil {
+		return client.conn.Close()
+	}
+	return nil
 }
 
 func (client *Client) On(message string, f interface{}) (err error) {
